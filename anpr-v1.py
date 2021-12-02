@@ -11,7 +11,7 @@ app = Flask(__name__)
 api = Api(app)
 
 class GetNumberPlate(Resource):
-    def get(self,fileName):
+    def post(self,fileName):
         #Make the image Gray
         img = cv2.imread(fileName)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -61,7 +61,12 @@ class GetNumberPlate(Resource):
     
         return {"data": result[0][-2]}
     
-api.add_resource(GetNumberPlate,'/getnumberplate/<string:fileName>')
+class Home(Resource):
+    def home(self):
+        return {"data": "Welcome to the anpr system"}
+   
+api.add_resource(GetNumberPlate,'api/getnumberplate/<string:fileName>')
+api.add_resource(Home,'api/home')
 
 if __name__ == '__main__':
     app.run()
